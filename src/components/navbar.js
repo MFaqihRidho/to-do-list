@@ -12,13 +12,24 @@ import Button from "@mui/material/Button";
 import MenuItem from "@mui/material/MenuItem";
 import { useNavigate } from "react-router-dom";
 import Switch from "@mui/material/Switch";
-import FormGroup from "@mui/material/FormGroup";
 import FormControlLabel from "@mui/material/FormControlLabel";
+import { useSelector, useDispatch } from "react-redux";
 
-const pages = ["Products", "Pricing", "Blog"];
-
-const Navbar = (theme) => {
+const Navbar = () => {
     const [anchorElNav, setAnchorElNav] = React.useState(null);
+    const theme = useSelector((state) => state.theme);
+    const dispatch = useDispatch();
+
+    const handleToggleDarkMode = () => {
+        if (theme === "dark") {
+            dispatch({ type: "LIGHT_MODE" });
+            console.log(theme);
+        } else {
+            dispatch({ type: "DARK_MODE" });
+            console.log(theme);
+        }
+    };
+
     const MaterialUISwitch = styled(Switch)(({ theme }) => ({
         width: 62,
         height: 34,
@@ -179,11 +190,14 @@ const Navbar = (theme) => {
                         <FormControlLabel
                             control={
                                 <MaterialUISwitch
+                                    onChange={handleToggleDarkMode}
                                     sx={{ m: 1 }}
-                                    defaultChecked
+                                    checked={theme}
                                 />
                             }
-                            label="Dark Mode"
+                            label={`${
+                                theme.charAt(0).toUpperCase() + theme.slice(1)
+                            } Mode`}
                         />
                     </Box>
                 </Toolbar>

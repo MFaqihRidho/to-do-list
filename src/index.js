@@ -2,12 +2,40 @@ import React from "react";
 import ReactDOM from "react-dom";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
+import { Provider } from "react-redux";
 import { BrowserRouter } from "react-router-dom";
+const redux = require("redux");
+
+const createStore = redux.createStore;
+
+const initialState = {
+    theme: "dark",
+};
+
+const rootReducer = (state = initialState, action) => {
+    if (action.type === "DARK_MODE") {
+        return {
+            ...state,
+            theme: "dark",
+        };
+    }
+    if (action.type === "LIGHT_MODE") {
+        return {
+            ...state,
+            theme: "light",
+        };
+    }
+    return state;
+};
+
+const store = createStore(rootReducer);
 
 ReactDOM.render(
     <React.StrictMode>
         <BrowserRouter>
-            <App />
+            <Provider store={store}>
+                <App />
+            </Provider>
         </BrowserRouter>
     </React.StrictMode>,
     document.getElementById("root")
