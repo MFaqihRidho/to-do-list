@@ -10,6 +10,7 @@ const createStore = redux.createStore;
 
 const initialState = {
     theme: "dark",
+    auth: false,
 };
 
 const rootReducer = (state = initialState, action) => {
@@ -23,6 +24,12 @@ const rootReducer = (state = initialState, action) => {
         return {
             ...state,
             theme: "light",
+        };
+    }
+    if (action.type === "LOGIN") {
+        return {
+            ...state,
+            auth: true,
         };
     }
     return state;

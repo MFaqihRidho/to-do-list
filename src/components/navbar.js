@@ -13,6 +13,8 @@ import { useNavigate } from "react-router-dom";
 import Switch from "@mui/material/Switch";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import { useSelector, useDispatch } from "react-redux";
+import { signOut } from "firebase/auth";
+import { auth } from "../firebase config";
 
 const Navbar = () => {
     const [anchorElNav, setAnchorElNav] = useState(null);
@@ -51,6 +53,12 @@ const Navbar = () => {
     const handleCloseNavMenu = (page) => {
         setAnchorElNav(null);
         navigate(page);
+    };
+
+    const handleLogOut = () => {
+        signOut(auth);
+        localStorage.setItem("auth", false);
+        navigate("/login");
     };
 
     return (
@@ -103,13 +111,21 @@ const Navbar = () => {
                             <MenuItem onClick={() => handleCloseNavMenu("/")}>
                                 <Typography textAlign="center">Home</Typography>
                             </MenuItem>
-                            <MenuItem
-                                onClick={() => handleCloseNavMenu("/login")}
-                            >
-                                <Typography textAlign="center">
-                                    Login
-                                </Typography>
-                            </MenuItem>
+                            {localStorage.getItem("auth") === "true" ? (
+                                <MenuItem onClick={handleLogOut}>
+                                    <Typography textAlign="center">
+                                        Logout
+                                    </Typography>
+                                </MenuItem>
+                            ) : (
+                                <MenuItem
+                                    onClick={() => handleCloseNavMenu("/login")}
+                                >
+                                    <Typography textAlign="center">
+                                        Login
+                                    </Typography>
+                                </MenuItem>
+                            )}
                         </Menu>
                     </Box>
                     <Typography
@@ -139,15 +155,27 @@ const Navbar = () => {
                                 Home
                             </Typography>
                         </Button>
-                        <Button
-                            onClick={() => navigate("/login")}
-                            variant="h1"
-                            sx={{ my: 2, display: "block" }}
-                        >
-                            <Typography variant="h6" noWrap>
-                                Login
-                            </Typography>
-                        </Button>
+                        {localStorage.getItem("auth") === "true" ? (
+                            <Button
+                                onClick={handleLogOut}
+                                variant="h1"
+                                sx={{ my: 2, display: "block" }}
+                            >
+                                <Typography variant="h6" noWrap>
+                                    Logout
+                                </Typography>
+                            </Button>
+                        ) : (
+                            <Button
+                                onClick={() => navigate("/login")}
+                                variant="h1"
+                                sx={{ my: 2, display: "block" }}
+                            >
+                                <Typography variant="h6" noWrap>
+                                    Login
+                                </Typography>
+                            </Button>
+                        )}
                     </Box>
 
                     <Box display={"flex"} sx={{ flexGrow: 0 }}>
