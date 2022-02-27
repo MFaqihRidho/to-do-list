@@ -21,23 +21,24 @@ const Navbar = () => {
     const dispatch = useDispatch();
 
     const handleToggleDarkMode = () => {
-        if (localStorage.getItem("theme") === "dark") {
+        if (theme === "dark") {
+            dispatch({ type: "LIGHT_MODE" });
             localStorage.setItem("theme", "light");
-            console.log(localStorage.getItem("theme"));
             setChecked(false);
         } else {
+            dispatch({ type: "DARK_MODE" });
             localStorage.setItem("theme", "dark");
-            console.log(localStorage.getItem("theme"));
-
             setChecked(true);
         }
     };
 
     useEffect(() => {
         if (localStorage.getItem("theme") === "dark") {
+            dispatch({ type: "DARK_MODE" });
             setChecked(true);
         } else {
             setChecked(false);
+            dispatch({ type: "LIGHT_MODE" });
         }
     }, []);
 
@@ -132,7 +133,7 @@ const Navbar = () => {
                         <Button
                             onClick={() => navigate("/")}
                             variant="h1"
-                            sx={{ my: 2, color: "white", display: "block" }}
+                            sx={{ my: 2, display: "block" }}
                         >
                             <Typography variant="h6" noWrap>
                                 Home
@@ -140,7 +141,8 @@ const Navbar = () => {
                         </Button>
                         <Button
                             onClick={() => navigate("/login")}
-                            sx={{ my: 2, color: "white", display: "block" }}
+                            variant="h1"
+                            sx={{ my: 2, display: "block" }}
                         >
                             <Typography variant="h6" noWrap>
                                 Login

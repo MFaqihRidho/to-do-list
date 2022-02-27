@@ -3,27 +3,63 @@ import Home from "./pages/home";
 import Navbar from "./components/navbar";
 import { Routes, Route } from "react-router-dom";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
-import { Paper } from "@mui/material";
+import { CssBaseline } from "@mui/material";
 import { useSelector } from "react-redux";
+import Login from "./pages/login";
 
 function App() {
     const mode = useSelector((state) => state.theme);
 
     const theme = createTheme({
         palette: {
-            mode: localStorage.getItem("theme"),
+            mode: mode,
+            primary: {
+                main: "#FCA311",
+                ...(mode === "dark" && {
+                    main: "#FCA311",
+                }),
+            },
+            secondary: {
+                main: "#14213D",
+                ...(mode === "dark" && {
+                    main: "#14213D",
+                }),
+            },
+            background: {
+                ...(mode === "light"
+                    ? {
+                          default: "#E5E5E5",
+                          paper: "#E5E5E5",
+                      }
+                    : {
+                          default: "#000000",
+                          paper: "#000000",
+                      }),
+            },
+            text: {
+                ...(mode === "light"
+                    ? {
+                          primary: "#000000",
+                          secondary: "#000000",
+                      }
+                    : {
+                          primary: "#FFFFFF",
+                          secondary: "#FFFFFF",
+                      }),
+            },
         },
     });
 
     return (
         <div className="App">
             <ThemeProvider theme={theme}>
-                <Paper style={{ height: "100vh" }}>
+                <CssBaseline>
                     <Navbar></Navbar>
                     <Routes>
                         <Route path="/" element={<Home />} />
+                        <Route path="/login" element={<Login />} />
                     </Routes>
-                </Paper>
+                </CssBaseline>
             </ThemeProvider>
         </div>
     );
