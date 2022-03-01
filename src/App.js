@@ -1,11 +1,12 @@
 import "./App.css";
-import Home from "./pages/home";
+import Create from "./pages/create";
+import Home from "./pages/Home";
+import Login from "./pages/login";
 import Navbar from "./components/navbar";
 import { Routes, Route } from "react-router-dom";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
 import { CssBaseline } from "@mui/material";
 import { useSelector } from "react-redux";
-import Login from "./pages/login";
 
 function App() {
     const mode = useSelector((state) => state.theme);
@@ -57,6 +58,7 @@ function App() {
                     <Navbar></Navbar>
                     <Routes>
                         <Route path="/" element={<Home />} />
+                        <Route path="/create" element={<Create />} />
                         <Route path="/login" element={<Login />} />
                     </Routes>
                 </CssBaseline>

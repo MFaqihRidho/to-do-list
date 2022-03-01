@@ -134,6 +134,17 @@ const Navbar = () => {
                                 <Typography textAlign="center">Home</Typography>
                             </MenuItem>
                             {localStorage.getItem("auth") === "true" ? (
+                                <MenuItem
+                                    onClick={() =>
+                                        handleCloseNavMenu("/create")
+                                    }
+                                >
+                                    <Typography textAlign="center">
+                                        Create
+                                    </Typography>
+                                </MenuItem>
+                            ) : null}
+                            {localStorage.getItem("auth") === "true" ? (
                                 <MenuItem onClick={handleOpen}>
                                     <Typography textAlign="center">
                                         Logout
@@ -177,6 +188,18 @@ const Navbar = () => {
                                 Home
                             </Typography>
                         </Button>
+                        {localStorage.getItem("auth") === "true" ? (
+                            <Button
+                                onClick={() => navigate("/create")}
+                                variant="h1"
+                                sx={{ my: 2, display: "block" }}
+                            >
+                                <Typography variant="h6" noWrap>
+                                    Create
+                                </Typography>
+                            </Button>
+                        ) : null}
+
                         {localStorage.getItem("auth") === "true" ? (
                             <Button
                                 onClick={handleOpen}
