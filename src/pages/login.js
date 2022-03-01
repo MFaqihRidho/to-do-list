@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Button } from "@mui/material";
 import GoogleIcon from "@mui/icons-material/Google";
 import { Container } from "@mui/material";
@@ -19,6 +19,12 @@ function Login() {
             navigate("/");
         });
     };
+
+    useEffect(() => {
+        if (localStorage.getItem("auth") === "true") {
+            navigate("/");
+        }
+    }, []);
 
     return (
         <Container

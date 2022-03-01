@@ -15,12 +15,33 @@ import FormControlLabel from "@mui/material/FormControlLabel";
 import { useSelector, useDispatch } from "react-redux";
 import { signOut } from "firebase/auth";
 import { auth } from "../firebase config";
+import Modal from "@mui/material/Modal";
 
 const Navbar = () => {
     const [anchorElNav, setAnchorElNav] = useState(null);
     const [checked, setChecked] = useState(false);
     const theme = useSelector((state) => state.theme);
     const dispatch = useDispatch();
+    const [open, setOpen] = React.useState(false);
+    const handleOpen = () => setOpen(true);
+    const handleClose = () => setOpen(false);
+
+    const style = {
+        position: "absolute",
+        top: "50%",
+        left: "50%",
+        transform: "translate(-50%, -50%)",
+        width: 350,
+        bgcolor: "background.paper",
+        border: "2px solid #000",
+        boxShadow: 24,
+        py: 3,
+        px: 0,
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "center",
+        alignItems: "center",
+    };
 
     const handleToggleDarkMode = () => {
         if (theme === "dark") {
@@ -59,11 +80,12 @@ const Navbar = () => {
         signOut(auth);
         localStorage.setItem("auth", false);
         navigate("/login");
+        handleClose();
     };
 
     return (
         <AppBar position="static">
-            <Container maxWidth="xl">
+            <Container maxWidth="lg">
                 <Toolbar disableGutters>
                     <Typography
                         variant="h6"
@@ -112,7 +134,7 @@ const Navbar = () => {
                                 <Typography textAlign="center">Home</Typography>
                             </MenuItem>
                             {localStorage.getItem("auth") === "true" ? (
-                                <MenuItem onClick={handleLogOut}>
+                                <MenuItem onClick={handleOpen}>
                                     <Typography textAlign="center">
                                         Logout
                                     </Typography>
@@ -157,7 +179,7 @@ const Navbar = () => {
                         </Button>
                         {localStorage.getItem("auth") === "true" ? (
                             <Button
-                                onClick={handleLogOut}
+                                onClick={handleOpen}
                                 variant="h1"
                                 sx={{ my: 2, display: "block" }}
                             >
@@ -189,13 +211,51 @@ const Navbar = () => {
                             }
                             label={
                                 localStorage.getItem("theme") === "dark"
-                                    ? "light mode?"
-                                    : "dark mode?"
+                                    ? "light?"
+                                    : "dark?"
                             }
                         />
                     </Box>
                 </Toolbar>
             </Container>
+            <Modal
+                open={open}
+                onClose={handleClose}
+                aria-labelledby="modal-modal-title"
+                aria-describedby="modal-modal-description"
+            >
+                <Box sx={style}>
+                    <Typography variant="h6" noWrap>
+                        Do you really want to logout?
+                    </Typography>
+                    <Box
+                        sx={{
+                            display: "flex",
+                            justifyContent: "center",
+                            alignItems: "center",
+                        }}
+                    >
+                        <Button
+                            onClick={handleClose}
+                            variant="h1"
+                            sx={{ my: 2, display: "block" }}
+                        >
+                            <Typography variant="h6" noWrap>
+                                No
+                            </Typography>
+                        </Button>
+                        <Button
+                            onClick={handleLogOut}
+                            variant="h1"
+                            sx={{ my: 2, display: "block" }}
+                        >
+                            <Typography variant="h6" noWrap>
+                                Yes
+                            </Typography>
+                        </Button>
+                    </Box>
+                </Box>
+            </Modal>
         </AppBar>
     );
 };

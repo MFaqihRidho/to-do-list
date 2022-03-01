@@ -32,8 +32,8 @@ function App() {
                           paper: "#E5E5E5",
                       }
                     : {
-                          default: "#000000",
-                          paper: "#000000",
+                          default: "#14213D",
+                          paper: "#14213D",
                       }),
             },
             text: {
