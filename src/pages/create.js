@@ -13,6 +13,7 @@ import Select from "@mui/material/Select";
 import { addDoc, collection } from "firebase/firestore";
 import { db, auth } from "../firebase config";
 import { useTheme } from "@mui/material/styles";
+import { useNavigate } from "react-router-dom";
 
 function Create() {
     const [time, setTime] = React.useState(new Date());
@@ -20,6 +21,7 @@ function Create() {
     const [important, setImportant] = React.useState("important");
     const [urgent, setUrgent] = React.useState("urgent");
 
+    const navigate = useNavigate();
     const theme = useTheme();
 
     const handleChangeDate = (e) => {
@@ -41,6 +43,7 @@ function Create() {
 
     const handleAddButton = () => {
         addToDoList();
+        navigate("/");
     };
 
     const collectionToDoListRef = collection(db, "to do list");
