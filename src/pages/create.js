@@ -14,9 +14,10 @@ import { addDoc, collection } from "firebase/firestore";
 import { db, auth } from "../firebase config";
 import { useTheme } from "@mui/material/styles";
 import { useNavigate } from "react-router-dom";
+import moment from "moment";
 
 function Create() {
-    const [time, setTime] = React.useState(new Date());
+    const [time, setTime] = React.useState(new Date().getTime());
     const [activities, setActivities] = React.useState("");
     const [important, setImportant] = React.useState("important");
     const [urgent, setUrgent] = React.useState("urgent");
@@ -26,7 +27,9 @@ function Create() {
 
     const handleChangeDate = (e) => {
         setTime(e._d.valueOf());
-        console.log(e._d.valueOf());
+        console.log(
+            moment.duration(e._d.valueOf() - new Date().getTime()).asHours()
+        );
     };
 
     const handleChangeImportant = (e) => {
@@ -42,8 +45,12 @@ function Create() {
     };
 
     const handleAddButton = () => {
-        addToDoList();
-        navigate("/");
+        if (activities !== "") {
+            addToDoList();
+            navigate("/");
+        } else {
+            return;
+        }
     };
 
     const collectionToDoListRef = collection(db, "to do list");

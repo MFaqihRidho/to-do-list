@@ -8,6 +8,7 @@ import Card from "@mui/material/Card";
 import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
 import { Button } from "@mui/material";
+import moment from "moment";
 
 function Home() {
     const [toDoList, setToDoList] = useState([]);
@@ -20,6 +21,7 @@ function Home() {
             setToDoList(
                 data.docs.map((doc) => ({ ...doc.data(), id: doc.id }))
             );
+            console.log(toDoList);
         };
         getToDoList();
     }, []);
@@ -104,16 +106,16 @@ function Home() {
                                                 >
                                                     {data.activities}
                                                 </Typography>
-                                                <Typography
-                                                    sx={{ mb: 1.5 }}
-                                                    color="text.secondary"
-                                                >
-                                                    adjective
-                                                </Typography>
-                                                <Typography variant="body2">
-                                                    well meaning and kindly.
-                                                    <br />
-                                                    {'"a benevolent smile"'}
+                                                <Typography color="text.secondary">
+                                                    {Math.floor(
+                                                        moment
+                                                            .duration(
+                                                                data?.time -
+                                                                    new Date().getTime()
+                                                            )
+                                                            .asHours()
+                                                    )}{" "}
+                                                    hours remaining
                                                 </Typography>
                                             </CardContent>
                                             <CardActions>
@@ -143,24 +145,44 @@ function Home() {
                             >
                                 Schedule It Now
                             </Typography>
-                        </Box>
-                        <Box
-                            sx={{
-                                backgroundColor: "#F78154",
-                                width: "100%",
-                                minHeight: "50vh",
-                                boxShadow: 5,
-                                py: 2,
-                                px: 3,
-                            }}
-                            gridColumn="span 1"
-                        >
-                            <Typography
-                                variant="h5"
-                                sx={{ textAlign: "center" }}
-                            >
-                                Delegate It
-                            </Typography>
+                            {toDoList.map((data) => (
+                                <div>
+                                    {data.author.id === auth.currentUser.uid &&
+                                    data.important === "important" &&
+                                    data.urgent === "not urgent" ? (
+                                        <Card sx={{ minWidth: 275, mt: 1 }}>
+                                            <CardContent>
+                                                <Typography
+                                                    sx={{
+                                                        fontSize: 24,
+                                                        fontWeight: "bold",
+                                                    }}
+                                                    color="text.secondary"
+                                                    gutterBottom
+                                                >
+                                                    {data.activities}
+                                                </Typography>
+                                                <Typography color="text.secondary">
+                                                    {Math.floor(
+                                                        moment
+                                                            .duration(
+                                                                data?.time -
+                                                                    new Date().getTime()
+                                                            )
+                                                            .asHours()
+                                                    )}{" "}
+                                                    hours remaining
+                                                </Typography>
+                                            </CardContent>
+                                            <CardActions>
+                                                <Button size="small">
+                                                    Mark as Done
+                                                </Button>
+                                            </CardActions>
+                                        </Card>
+                                    ) : null}
+                                </div>
+                            ))}
                         </Box>
                         <Box
                             sx={{
@@ -177,8 +199,102 @@ function Home() {
                                 variant="h5"
                                 sx={{ textAlign: "center" }}
                             >
+                                Delegate It
+                            </Typography>
+                            {toDoList.map((data) => (
+                                <div>
+                                    {data.author.id === auth.currentUser.uid &&
+                                    data.important === "not important" &&
+                                    data.urgent === "urgent" ? (
+                                        <Card sx={{ minWidth: 275, mt: 1 }}>
+                                            <CardContent>
+                                                <Typography
+                                                    sx={{
+                                                        fontSize: 24,
+                                                        fontWeight: "bold",
+                                                    }}
+                                                    color="text.secondary"
+                                                    gutterBottom
+                                                >
+                                                    {data.activities}
+                                                </Typography>
+                                                <Typography color="text.secondary">
+                                                    {Math.floor(
+                                                        moment
+                                                            .duration(
+                                                                data?.time -
+                                                                    new Date().getTime()
+                                                            )
+                                                            .asHours()
+                                                    )}{" "}
+                                                    hours remaining
+                                                </Typography>
+                                            </CardContent>
+                                            <CardActions>
+                                                <Button size="small">
+                                                    Mark as Done
+                                                </Button>
+                                            </CardActions>
+                                        </Card>
+                                    ) : null}
+                                </div>
+                            ))}
+                        </Box>
+                        <Box
+                            sx={{
+                                backgroundColor: "#F78154",
+                                width: "100%",
+                                minHeight: "50vh",
+                                boxShadow: 5,
+                                py: 2,
+                                px: 3,
+                            }}
+                            gridColumn="span 1"
+                        >
+                            <Typography
+                                variant="h5"
+                                sx={{ textAlign: "center" }}
+                            >
                                 Just Delete it
                             </Typography>
+                            {toDoList.map((data) => (
+                                <div>
+                                    {data.author.id === auth.currentUser.uid &&
+                                    data.important === "not important" &&
+                                    data.urgent === "not urgent" ? (
+                                        <Card sx={{ minWidth: 275, mt: 1 }}>
+                                            <CardContent>
+                                                <Typography
+                                                    sx={{
+                                                        fontSize: 24,
+                                                        fontWeight: "bold",
+                                                    }}
+                                                    color="text.secondary"
+                                                    gutterBottom
+                                                >
+                                                    {data.activities}
+                                                </Typography>
+                                                <Typography color="text.secondary">
+                                                    {Math.floor(
+                                                        moment
+                                                            .duration(
+                                                                data?.time -
+                                                                    new Date().getTime()
+                                                            )
+                                                            .asHours()
+                                                    )}{" "}
+                                                    hours remaining
+                                                </Typography>
+                                            </CardContent>
+                                            <CardActions>
+                                                <Button size="small">
+                                                    Mark as Done
+                                                </Button>
+                                            </CardActions>
+                                        </Card>
+                                    ) : null}
+                                </div>
+                            ))}
                         </Box>
                     </Box>
                 </Box>

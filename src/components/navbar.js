@@ -221,6 +221,15 @@ const Navbar = () => {
                                 </Typography>
                             </Button>
                         )}
+                        <Button
+                            onClick={() => navigate("/About")}
+                            variant="h1"
+                            sx={{ my: 2, display: "block" }}
+                        >
+                            <Typography variant="h6" noWrap>
+                                About
+                            </Typography>
+                        </Button>
                     </Box>
 
                     <Box display={"flex"} sx={{ flexGrow: 0 }}>
