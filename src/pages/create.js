@@ -14,6 +14,7 @@ import { addDoc, collection } from "firebase/firestore";
 import { db, auth } from "../firebase config";
 import { useTheme } from "@mui/material/styles";
 import { useNavigate } from "react-router-dom";
+import Modal from "@mui/material/Modal";
 import moment from "moment";
 
 function Create() {
@@ -21,15 +22,34 @@ function Create() {
     const [activities, setActivities] = React.useState("");
     const [important, setImportant] = React.useState("important");
     const [urgent, setUrgent] = React.useState("urgent");
+    const [open, setOpen] = React.useState(false);
+    const handleOpen = () => setOpen(true);
+    const handleClose = () => setOpen(false);
+
+    const style = {
+        position: "absolute",
+        top: "50%",
+        left: "50%",
+        transform: "translate(-50%, -50%)",
+        width: "max-content",
+        bgcolor: "background.paper",
+        border: "2px solid #000",
+        boxShadow: 24,
+        py: 3,
+        px: 2,
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "center",
+        alignItems: "center",
+    };
 
     const navigate = useNavigate();
     const theme = useTheme();
 
     const handleChangeDate = (e) => {
         setTime(e._d.valueOf());
-        console.log(
-            moment.duration(e._d.valueOf() - new Date().getTime()).asHours()
-        );
+
+        console.log();
     };
 
     const handleChangeImportant = (e) => {
@@ -45,11 +65,14 @@ function Create() {
     };
 
     const handleAddButton = () => {
-        if (activities !== "") {
+        if (
+            activities !== "" &&
+            moment.duration(time - new Date().getTime()).asHours() > 0
+        ) {
             addToDoList();
             navigate("/");
         } else {
-            return;
+            handleOpen();
         }
     };
 
@@ -198,6 +221,26 @@ function Create() {
             ) : (
                 <h1>You Have To login first</h1>
             )}
+            <Modal
+                open={open}
+                onClose={handleClose}
+                aria-labelledby="modal-modal-title"
+                aria-describedby="modal-modal-description"
+            >
+                <Box sx={style}>
+                    <Typography variant="h6" noWrap>
+                        Fill the activites first or maybe the time is no more
+                        than the current day and hour
+                    </Typography>
+                    <Box
+                        sx={{
+                            display: "flex",
+                            justifyContent: "center",
+                            alignItems: "center",
+                        }}
+                    ></Box>
+                </Box>
+            </Modal>
         </Container>
     );
 }

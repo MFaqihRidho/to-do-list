@@ -7,8 +7,11 @@ import { useTheme } from "@mui/material/styles";
 import Card from "@mui/material/Card";
 import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
+import CardHeader from "@mui/material/CardHeader";
 import { Button } from "@mui/material";
 import moment from "moment";
+import MoreVertIcon from "@mui/icons-material/MoreVert";
+import IconButton from "@mui/material/IconButton";
 
 function Home() {
     const [toDoList, setToDoList] = useState([]);
@@ -25,6 +28,20 @@ function Home() {
         };
         getToDoList();
     }, []);
+
+    const editStyle = {
+        color: "rgb(95, 173, 86)",
+        "&:hover": {
+            background: "rgba(95, 173, 86,0.1)",
+        },
+    };
+
+    const deleteStyle = {
+        color: "rgb(247, 129, 84)",
+        "&:hover": {
+            background: "rgba(247, 129, 84,0.1)",
+        },
+    };
 
     return (
         <Container
@@ -95,32 +112,47 @@ function Home() {
                                     data.important === "important" &&
                                     data.urgent === "urgent" ? (
                                         <Card sx={{ minWidth: 275, mt: 1 }}>
-                                            <CardContent>
-                                                <Typography
-                                                    sx={{
-                                                        fontSize: 24,
-                                                        fontWeight: "bold",
-                                                    }}
-                                                    color="text.secondary"
-                                                    gutterBottom
-                                                >
-                                                    {data.activities}
-                                                </Typography>
-                                                <Typography color="text.secondary">
-                                                    {Math.floor(
-                                                        moment
-                                                            .duration(
-                                                                data?.time -
-                                                                    new Date().getTime()
-                                                            )
-                                                            .asHours()
-                                                    )}{" "}
-                                                    hours remaining
-                                                </Typography>
-                                            </CardContent>
-                                            <CardActions>
+                                            <CardHeader
+                                                title={
+                                                    <Typography
+                                                        variant="h5"
+                                                        sx={{
+                                                            fontWeight: "bold",
+                                                        }}
+                                                    >
+                                                        {data.activities}
+                                                    </Typography>
+                                                }
+                                                subheader={`${Number(
+                                                    moment
+                                                        .duration(
+                                                            data?.time -
+                                                                new Date().getTime()
+                                                        )
+                                                        .asHours()
+                                                ).toFixed(2)} hours remaining`}
+                                            />
+                                            <CardActions
+                                                sx={{
+                                                    display: "flex",
+                                                    justifyContent:
+                                                        "space-around",
+                                                }}
+                                            >
                                                 <Button size="small">
                                                     Mark as Done
+                                                </Button>
+                                                <Button
+                                                    sx={editStyle}
+                                                    size="small"
+                                                >
+                                                    Edit
+                                                </Button>
+                                                <Button
+                                                    sx={deleteStyle}
+                                                    size="small"
+                                                >
+                                                    Delete
                                                 </Button>
                                             </CardActions>
                                         </Card>
@@ -151,32 +183,41 @@ function Home() {
                                     data.important === "important" &&
                                     data.urgent === "not urgent" ? (
                                         <Card sx={{ minWidth: 275, mt: 1 }}>
-                                            <CardContent>
-                                                <Typography
-                                                    sx={{
-                                                        fontSize: 24,
-                                                        fontWeight: "bold",
-                                                    }}
-                                                    color="text.secondary"
-                                                    gutterBottom
-                                                >
-                                                    {data.activities}
-                                                </Typography>
-                                                <Typography color="text.secondary">
-                                                    {Math.floor(
-                                                        moment
-                                                            .duration(
-                                                                data?.time -
-                                                                    new Date().getTime()
-                                                            )
-                                                            .asHours()
-                                                    )}{" "}
-                                                    hours remaining
-                                                </Typography>
-                                            </CardContent>
+                                            <CardHeader
+                                                title={
+                                                    <Typography
+                                                        variant="h5"
+                                                        sx={{
+                                                            fontWeight: "bold",
+                                                        }}
+                                                    >
+                                                        {data.activities}
+                                                    </Typography>
+                                                }
+                                                subheader={`${Number(
+                                                    moment
+                                                        .duration(
+                                                            data?.time -
+                                                                new Date().getTime()
+                                                        )
+                                                        .asHours()
+                                                ).toFixed(2)} hours remaining`}
+                                            />
                                             <CardActions>
                                                 <Button size="small">
                                                     Mark as Done
+                                                </Button>
+                                                <Button
+                                                    sx={editStyle}
+                                                    size="small"
+                                                >
+                                                    Edit
+                                                </Button>
+                                                <Button
+                                                    sx={deleteStyle}
+                                                    size="small"
+                                                >
+                                                    Delete
                                                 </Button>
                                             </CardActions>
                                         </Card>
@@ -207,32 +248,41 @@ function Home() {
                                     data.important === "not important" &&
                                     data.urgent === "urgent" ? (
                                         <Card sx={{ minWidth: 275, mt: 1 }}>
-                                            <CardContent>
-                                                <Typography
-                                                    sx={{
-                                                        fontSize: 24,
-                                                        fontWeight: "bold",
-                                                    }}
-                                                    color="text.secondary"
-                                                    gutterBottom
-                                                >
-                                                    {data.activities}
-                                                </Typography>
-                                                <Typography color="text.secondary">
-                                                    {Math.floor(
-                                                        moment
-                                                            .duration(
-                                                                data?.time -
-                                                                    new Date().getTime()
-                                                            )
-                                                            .asHours()
-                                                    )}{" "}
-                                                    hours remaining
-                                                </Typography>
-                                            </CardContent>
+                                            <CardHeader
+                                                title={
+                                                    <Typography
+                                                        variant="h5"
+                                                        sx={{
+                                                            fontWeight: "bold",
+                                                        }}
+                                                    >
+                                                        {data.activities}
+                                                    </Typography>
+                                                }
+                                                subheader={`${Number(
+                                                    moment
+                                                        .duration(
+                                                            data?.time -
+                                                                new Date().getTime()
+                                                        )
+                                                        .asHours()
+                                                ).toFixed(2)} hours remaining`}
+                                            />
                                             <CardActions>
                                                 <Button size="small">
                                                     Mark as Done
+                                                </Button>
+                                                <Button
+                                                    sx={editStyle}
+                                                    size="small"
+                                                >
+                                                    Edit
+                                                </Button>
+                                                <Button
+                                                    sx={deleteStyle}
+                                                    size="small"
+                                                >
+                                                    Delete
                                                 </Button>
                                             </CardActions>
                                         </Card>
@@ -263,32 +313,41 @@ function Home() {
                                     data.important === "not important" &&
                                     data.urgent === "not urgent" ? (
                                         <Card sx={{ minWidth: 275, mt: 1 }}>
-                                            <CardContent>
-                                                <Typography
-                                                    sx={{
-                                                        fontSize: 24,
-                                                        fontWeight: "bold",
-                                                    }}
-                                                    color="text.secondary"
-                                                    gutterBottom
-                                                >
-                                                    {data.activities}
-                                                </Typography>
-                                                <Typography color="text.secondary">
-                                                    {Math.floor(
-                                                        moment
-                                                            .duration(
-                                                                data?.time -
-                                                                    new Date().getTime()
-                                                            )
-                                                            .asHours()
-                                                    )}{" "}
-                                                    hours remaining
-                                                </Typography>
-                                            </CardContent>
+                                            <CardHeader
+                                                title={
+                                                    <Typography
+                                                        variant="h5"
+                                                        sx={{
+                                                            fontWeight: "bold",
+                                                        }}
+                                                    >
+                                                        {data.activities}
+                                                    </Typography>
+                                                }
+                                                subheader={`${Number(
+                                                    moment
+                                                        .duration(
+                                                            data?.time -
+                                                                new Date().getTime()
+                                                        )
+                                                        .asHours()
+                                                ).toFixed(2)} hours remaining`}
+                                            />
                                             <CardActions>
                                                 <Button size="small">
                                                     Mark as Done
+                                                </Button>
+                                                <Button
+                                                    sx={editStyle}
+                                                    size="small"
+                                                >
+                                                    Edit
+                                                </Button>
+                                                <Button
+                                                    sx={deleteStyle}
+                                                    size="small"
+                                                >
+                                                    Delete
                                                 </Button>
                                             </CardActions>
                                         </Card>

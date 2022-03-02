@@ -159,6 +159,13 @@ const Navbar = () => {
                                     </Typography>
                                 </MenuItem>
                             )}
+                            <MenuItem
+                                onClick={() => handleCloseNavMenu("/about")}
+                            >
+                                <Typography textAlign="center">
+                                    About
+                                </Typography>
+                            </MenuItem>
                         </Menu>
                     </Box>
                     <Typography
