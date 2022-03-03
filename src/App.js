@@ -1,6 +1,6 @@
 import "./App.css";
 import Create from "./pages/create";
-import Home from "./pages/Home";
+import Home from "./pages/home";
 import Login from "./pages/login";
 import About from "./pages/about";
 import Navbar from "./components/navbar";
