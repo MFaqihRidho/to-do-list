@@ -113,6 +113,7 @@ function Home() {
                 display: "flex",
                 alignItems: "center",
                 flexDirection: "column",
+                width: "100%",
             }}
         >
             {localStorage.getItem("auth") === "true" ? (
@@ -120,18 +121,19 @@ function Home() {
                     <Box
                         sx={{
                             backgroundColor: "background.paper",
-                            m: 5,
                             boxShadow: 5,
-                            minHeight: "100vh",
+                            minHeight: "max-content",
                             width: "100%",
+                            mt: 5,
                             pb: 5,
                             display: "flex",
                             flexDirection: "column",
                             justifyContent: "flex-start",
                             alignItems: "center",
                             justifyItems: "center",
+                            px: 7,
                             [theme.breakpoints.down("md")]: {
-                                px: 10,
+                                px: 5,
                                 width: "100%",
                             },
                         }}
@@ -150,9 +152,14 @@ function Home() {
                         </Typography>
                         <Box
                             display="grid"
-                            gridTemplateColumns="repeat(2, 1fr)"
                             gap={2}
-                            sx={{ width: "100%", px: 10 }}
+                            sx={{
+                                width: "100%",
+                                gridTemplateColumns: "repeat(2,1fr)",
+                                [theme.breakpoints.down("md")]: {
+                                    gridTemplateColumns: "1fr",
+                                },
+                            }}
                         >
                             <Box
                                 sx={{
@@ -161,7 +168,6 @@ function Home() {
                                     minHeight: "50vh",
                                     boxShadow: 5,
                                     py: 2,
-                                    px: 3,
                                 }}
                                 gridColumn="span 1"
                             >
@@ -179,7 +185,13 @@ function Home() {
                                         data.urgent === "urgent" &&
                                         data.done === false &&
                                         data.late === false ? (
-                                            <Card sx={{ minWidth: 275, mt: 1 }}>
+                                            <Card
+                                                sx={{
+                                                    minWidth: "max-content",
+                                                    mt: 1,
+                                                    mx: 1,
+                                                }}
+                                            >
                                                 <CardHeader
                                                     title={
                                                         <Typography
@@ -267,7 +279,13 @@ function Home() {
                                         data.urgent === "not urgent" &&
                                         data.done === false &&
                                         data.late === false ? (
-                                            <Card sx={{ minWidth: 275, mt: 1 }}>
+                                            <Card
+                                                sx={{
+                                                    minWidth: "max-content",
+                                                    mt: 1,
+                                                    mx: 1,
+                                                }}
+                                            >
                                                 <CardHeader
                                                     title={
                                                         <Typography
@@ -360,7 +378,13 @@ function Home() {
                                         data.urgent === "urgent" &&
                                         data.done === false &&
                                         data.late === false ? (
-                                            <Card sx={{ minWidth: 275, mt: 1 }}>
+                                            <Card
+                                                sx={{
+                                                    minWidth: "max-content",
+                                                    mt: 1,
+                                                    mx: 1,
+                                                }}
+                                            >
                                                 <CardHeader
                                                     title={
                                                         <Typography
@@ -451,7 +475,13 @@ function Home() {
                                         data.urgent === "not urgent" &&
                                         data.done === false &&
                                         data.late === false ? (
-                                            <Card sx={{ minWidth: 275, mt: 1 }}>
+                                            <Card
+                                                sx={{
+                                                    minWidth: "max-content",
+                                                    mt: 1,
+                                                    mx: 1,
+                                                }}
+                                            >
                                                 <CardHeader
                                                     title={
                                                         <Typography
@@ -557,18 +587,19 @@ function Home() {
                     <Box
                         sx={{
                             backgroundColor: "background.paper",
-                            m: 5,
                             boxShadow: 5,
                             minHeight: "max-content",
                             width: "100%",
+                            mt: 5,
                             pb: 5,
                             display: "flex",
                             flexDirection: "column",
                             justifyContent: "flex-start",
                             alignItems: "center",
                             justifyItems: "center",
+                            px: 7,
                             [theme.breakpoints.down("md")]: {
-                                px: 10,
+                                px: 5,
                                 width: "100%",
                             },
                         }}
@@ -587,9 +618,14 @@ function Home() {
                         </Typography>
                         <Box
                             display="grid"
-                            gridTemplateColumns="repeat(2, 1fr)"
                             gap={2}
-                            sx={{ width: "100%", px: 10 }}
+                            sx={{
+                                width: "100%",
+                                gridTemplateColumns: "repeat(2,1fr)",
+                                [theme.breakpoints.down("md")]: {
+                                    gridTemplateColumns: "1fr",
+                                },
+                            }}
                         >
                             <Box
                                 sx={{
@@ -598,7 +634,6 @@ function Home() {
                                     minHeight: "50vh",
                                     boxShadow: 5,
                                     py: 2,
-                                    px: 3,
                                 }}
                                 gridColumn="span 1"
                             >
@@ -613,7 +648,13 @@ function Home() {
                                         {data.author.id ===
                                             auth?.currentUser?.uid &&
                                         data.done === true ? (
-                                            <Card sx={{ minWidth: 275, mt: 1 }}>
+                                            <Card
+                                                sx={{
+                                                    minWidth: "max-content",
+                                                    mt: 1,
+                                                    mx: 1,
+                                                }}
+                                            >
                                                 <CardHeader
                                                     action={
                                                         <IconButton
@@ -650,7 +691,6 @@ function Home() {
                                     minHeight: "50vh",
                                     boxShadow: 5,
                                     py: 2,
-                                    px: 3,
                                 }}
                                 gridColumn="span 1"
                             >
@@ -665,7 +705,13 @@ function Home() {
                                         {data.author.id ===
                                             auth?.currentUser?.uid &&
                                         data.late === true ? (
-                                            <Card sx={{ minWidth: 275, mt: 1 }}>
+                                            <Card
+                                                sx={{
+                                                    minWidth: "max-content",
+                                                    mt: 1,
+                                                    mx: 1,
+                                                }}
+                                            >
                                                 <CardHeader
                                                     action={
                                                         <IconButton
