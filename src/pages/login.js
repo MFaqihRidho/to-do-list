@@ -24,7 +24,7 @@ function Login() {
         if (localStorage.getItem("auth") === "true") {
             navigate("/");
         }
-    }, []);
+    }, [navigate]);
 
     return (
         <Container

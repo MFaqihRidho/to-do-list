@@ -21,7 +21,7 @@ import { IconButton } from "@mui/material";
 
 function Home() {
     const [toDoList, setToDoList] = useState([]);
-    const [update, setUpdate] = useState({
+    const [update] = useState({
         activities: "sdasd",
         important: "important",
         time: 1646348452000,
@@ -65,7 +65,7 @@ function Home() {
             console.log(toDoList);
         };
         getToDoList();
-    }, []);
+    }, [collectionToDoListRef, toDoList]);
 
     const deleteToDoList = async (id) => {
         const path = doc(db, "to do list", id);

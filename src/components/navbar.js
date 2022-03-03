@@ -63,7 +63,7 @@ const Navbar = () => {
             setChecked(false);
             dispatch({ type: "LIGHT_MODE" });
         }
-    }, []);
+    }, [dispatch]);
 
     const navigate = useNavigate();
 
