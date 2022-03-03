@@ -23,6 +23,8 @@ function Create() {
     const [important, setImportant] = React.useState("important");
     const [urgent, setUrgent] = React.useState("urgent");
     const [open, setOpen] = React.useState(false);
+    const [done] = React.useState(false);
+    const [late] = React.useState(false);
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
 
@@ -88,6 +90,8 @@ function Create() {
                 name: auth.currentUser.displayName,
                 id: auth.currentUser.uid,
             },
+            done,
+            late,
         });
     };
 
