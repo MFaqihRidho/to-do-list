@@ -14,10 +14,7 @@ function About() {
             <Typography sx={{ mb: 2 }} variant="h2">
                 About
             </Typography>
-            <Typography
-                sx={{ width: "60ch", textAlign: "justify" }}
-                variant="h5"
-            >
+            <Typography sx={{ width: "100%", textAlign: "start" }} variant="h5">
                 This is My first Project implementing CRUD(Create Read Update
                 Delete), Maybe you confuse about do it now or Schedule it on
                 home page,if you don't know i'm using matrix eisenhower so it
@@ -25,8 +22,8 @@ function About() {
             </Typography>
             <Typography
                 sx={{
-                    width: "60ch",
-                    textAlign: "justify",
+                    width: "100%",
+                    textAlign: "start",
                     mt: 2,
                 }}
                 variant="h5"

@@ -1,21 +1,56 @@
 import React, { useEffect, useState } from "react";
-import { getDocs, collection } from "firebase/firestore";
+import {
+    getDocs,
+    collection,
+    doc,
+    deleteDoc,
+    updateDoc,
+} from "firebase/firestore";
 import { db, auth } from "../firebase config";
 import { Container, Typography } from "@mui/material";
 import { Box } from "@mui/system";
 import { useTheme } from "@mui/material/styles";
 import Card from "@mui/material/Card";
 import CardActions from "@mui/material/CardActions";
-import CardContent from "@mui/material/CardContent";
 import CardHeader from "@mui/material/CardHeader";
 import { Button } from "@mui/material";
 import moment from "moment";
-import MoreVertIcon from "@mui/icons-material/MoreVert";
-import IconButton from "@mui/material/IconButton";
+import { Modal } from "@mui/material";
 
 function Home() {
     const [toDoList, setToDoList] = useState([]);
+    const [update, setUpdate] = useState({
+        activities: "sdasd",
+        important: "important",
+        time: 1646348452000,
+        urgent: "urgent",
+    });
+    const [id, setId] = useState([]);
     const collectionToDoListRef = collection(db, "to do list");
+    const [open, setOpen] = React.useState(false);
+    const handleOpen = (id) => {
+        setOpen(true);
+        setId(id);
+    };
+    const handleClose = () => setOpen(false);
+
+    const style = {
+        position: "absolute",
+        top: "50%",
+        left: "50%",
+        transform: "translate(-50%, -50%)",
+        width: "max-content",
+        bgcolor: "background.paper",
+        border: "2px solid #000",
+        boxShadow: 24,
+        py: 1,
+        px: 3,
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "center",
+        alignItems: "center",
+    };
+
     const theme = useTheme();
 
     useEffect(() => {
@@ -28,6 +63,20 @@ function Home() {
         };
         getToDoList();
     }, []);
+
+    const deleteToDoList = async (id) => {
+        const path = doc(db, "to do list", id);
+        await deleteDoc(path);
+        window.location.reload();
+        setId("");
+    };
+
+    const updateToDoList = async (id) => {
+        const path = doc(db, "to do list", id);
+        await updateDoc(path, update);
+        window.location.reload();
+        setId("");
+    };
 
     const editStyle = {
         color: "rgb(95, 173, 86)",
@@ -108,7 +157,8 @@ function Home() {
                             </Typography>
                             {toDoList.map((data) => (
                                 <div>
-                                    {data.author.id === auth.currentUser.uid &&
+                                    {data.author.id ===
+                                        auth?.currentUser?.uid &&
                                     data.important === "important" &&
                                     data.urgent === "urgent" ? (
                                         <Card sx={{ minWidth: 275, mt: 1 }}>
@@ -149,6 +199,9 @@ function Home() {
                                                     Edit
                                                 </Button>
                                                 <Button
+                                                    onClick={() =>
+                                                        handleOpen(data.id)
+                                                    }
                                                     sx={deleteStyle}
                                                     size="small"
                                                 >
@@ -179,7 +232,8 @@ function Home() {
                             </Typography>
                             {toDoList.map((data) => (
                                 <div>
-                                    {data.author.id === auth.currentUser.uid &&
+                                    {data.author.id ===
+                                        auth?.currentUser?.uid &&
                                     data.important === "important" &&
                                     data.urgent === "not urgent" ? (
                                         <Card sx={{ minWidth: 275, mt: 1 }}>
@@ -203,17 +257,29 @@ function Home() {
                                                         .asHours()
                                                 ).toFixed(2)} hours remaining`}
                                             />
-                                            <CardActions>
+                                            <CardActions
+                                                sx={{
+                                                    display: "flex",
+                                                    justifyContent:
+                                                        "space-around",
+                                                }}
+                                            >
                                                 <Button size="small">
                                                     Mark as Done
                                                 </Button>
                                                 <Button
+                                                    onClick={() =>
+                                                        updateToDoList(data.id)
+                                                    }
                                                     sx={editStyle}
                                                     size="small"
                                                 >
                                                     Edit
                                                 </Button>
                                                 <Button
+                                                    onClick={() =>
+                                                        handleOpen(data.id)
+                                                    }
                                                     sx={deleteStyle}
                                                     size="small"
                                                 >
@@ -244,7 +310,8 @@ function Home() {
                             </Typography>
                             {toDoList.map((data) => (
                                 <div>
-                                    {data.author.id === auth.currentUser.uid &&
+                                    {data.author.id ===
+                                        auth?.currentUser?.uid &&
                                     data.important === "not important" &&
                                     data.urgent === "urgent" ? (
                                         <Card sx={{ minWidth: 275, mt: 1 }}>
@@ -268,7 +335,13 @@ function Home() {
                                                         .asHours()
                                                 ).toFixed(2)} hours remaining`}
                                             />
-                                            <CardActions>
+                                            <CardActions
+                                                sx={{
+                                                    display: "flex",
+                                                    justifyContent:
+                                                        "space-around",
+                                                }}
+                                            >
                                                 <Button size="small">
                                                     Mark as Done
                                                 </Button>
@@ -279,6 +352,9 @@ function Home() {
                                                     Edit
                                                 </Button>
                                                 <Button
+                                                    onClick={() =>
+                                                        handleOpen(data.id)
+                                                    }
                                                     sx={deleteStyle}
                                                     size="small"
                                                 >
@@ -309,7 +385,8 @@ function Home() {
                             </Typography>
                             {toDoList.map((data) => (
                                 <div>
-                                    {data.author.id === auth.currentUser.uid &&
+                                    {data.author.id ===
+                                        auth?.currentUser?.uid &&
                                     data.important === "not important" &&
                                     data.urgent === "not urgent" ? (
                                         <Card sx={{ minWidth: 275, mt: 1 }}>
@@ -333,7 +410,13 @@ function Home() {
                                                         .asHours()
                                                 ).toFixed(2)} hours remaining`}
                                             />
-                                            <CardActions>
+                                            <CardActions
+                                                sx={{
+                                                    display: "flex",
+                                                    justifyContent:
+                                                        "space-around",
+                                                }}
+                                            >
                                                 <Button size="small">
                                                     Mark as Done
                                                 </Button>
@@ -344,6 +427,9 @@ function Home() {
                                                     Edit
                                                 </Button>
                                                 <Button
+                                                    onClick={() =>
+                                                        handleOpen(data.id)
+                                                    }
                                                     sx={deleteStyle}
                                                     size="small"
                                                 >
@@ -356,6 +442,44 @@ function Home() {
                             ))}
                         </Box>
                     </Box>
+                    <Modal
+                        open={open}
+                        onClose={handleClose}
+                        aria-labelledby="modal-modal-title"
+                        aria-describedby="modal-modal-description"
+                    >
+                        <Box sx={style}>
+                            <Typography variant="h6" noWrap>
+                                Do you really want to Delete this to do?
+                            </Typography>
+                            <Box
+                                sx={{
+                                    display: "flex",
+                                    justifyContent: "center",
+                                    alignItems: "center",
+                                }}
+                            >
+                                <Button
+                                    onClick={handleClose}
+                                    variant="h1"
+                                    sx={{ my: 2, display: "block" }}
+                                >
+                                    <Typography variant="h6" noWrap>
+                                        No
+                                    </Typography>
+                                </Button>
+                                <Button
+                                    onClick={() => deleteToDoList(id)}
+                                    variant="h1"
+                                    sx={{ my: 2, display: "block" }}
+                                >
+                                    <Typography variant="h6" noWrap>
+                                        Yes
+                                    </Typography>
+                                </Button>
+                            </Box>
+                        </Box>
+                    </Modal>
                 </Box>
             ) : (
                 <h1>You Have to Login First</h1>
