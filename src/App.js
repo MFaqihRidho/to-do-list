@@ -3,6 +3,7 @@ import Create from "./pages/create";
 import Home from "./pages/home";
 import Login from "./pages/login";
 import About from "./pages/about";
+import Update from "./pages/update";
 import Navbar from "./components/navbar";
 import { Routes, Route } from "react-router-dom";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
@@ -62,6 +63,7 @@ function App() {
                         <Route path="/about" element={<About />} />
                         <Route path="/create" element={<Create />} />
                         <Route path="/login" element={<Login />} />
+                        <Route path="/update/:id" element={<Update />} />
                     </Routes>
                 </CssBaseline>
             </ThemeProvider>

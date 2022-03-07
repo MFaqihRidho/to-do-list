@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import {
     getDocs,
     collection,
@@ -21,20 +22,18 @@ import { IconButton } from "@mui/material";
 
 function Home() {
     const [toDoList, setToDoList] = useState([]);
-    const [update] = useState({
-        activities: "sdasd",
-        important: "important",
-        time: 1646348452000,
-        urgent: "urgent",
-    });
+
+    const navigate = useNavigate();
 
     const [id, setId] = useState([]);
     const collectionToDoListRef = collection(db, "to do list");
     const [open, setOpen] = React.useState(false);
+
     const handleOpen = (id) => {
         setOpen(true);
         setId(id);
     };
+
     const handleClose = () => setOpen(false);
 
     const style = {
@@ -62,10 +61,9 @@ function Home() {
             setToDoList(
                 data.docs.map((doc) => ({ ...doc.data(), id: doc.id }))
             );
-            console.log(toDoList);
         };
         getToDoList();
-    }, [collectionToDoListRef, toDoList]);
+    }, [collectionToDoListRef]);
 
     const deleteToDoList = async (id) => {
         const path = doc(db, "to do list", id);
@@ -75,9 +73,7 @@ function Home() {
     };
 
     const updateToDoList = async (id) => {
-        const path = doc(db, "to do list", id);
-        await updateDoc(path, update);
-        window.location.reload();
+        navigate(`update/${id}`);
         setId("");
     };
 
