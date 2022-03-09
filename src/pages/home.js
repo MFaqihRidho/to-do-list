@@ -26,7 +26,7 @@ function Home() {
     const navigate = useNavigate();
 
     const [id, setId] = useState([]);
-    const collectionToDoListRef = collection(db, "to do list");
+
     const [open, setOpen] = React.useState(false);
 
     const handleOpen = (id) => {
@@ -56,6 +56,7 @@ function Home() {
     const theme = useTheme();
 
     useEffect(() => {
+        const collectionToDoListRef = collection(db, "to do list");
         const getToDoList = async () => {
             const data = await getDocs(collectionToDoListRef);
             setToDoList(
@@ -63,7 +64,7 @@ function Home() {
             );
         };
         getToDoList();
-    }, [collectionToDoListRef]);
+    }, []);
 
     const deleteToDoList = async (id) => {
         const path = doc(db, "to do list", id);
@@ -230,6 +231,11 @@ function Home() {
                                                         Mark as Done
                                                     </Button>
                                                     <Button
+                                                        onClick={() =>
+                                                            updateToDoList(
+                                                                data.id
+                                                            )
+                                                        }
                                                         sx={editStyle}
                                                         size="small"
                                                     >
