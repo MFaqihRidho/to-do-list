@@ -20,37 +20,54 @@ import moment from "moment";
 
 export default function Update() {
     const params = useParams();
-    const [data, setData] = useState([]);
-    const [open, setOpen] = React.useState(false);
+    const [time, setTime] = useState(new Date().getTime());
+    const [activities, setActivities] = useState("");
+    const [important, setImportant] = useState("");
+    const [urgent, setUrgent] = useState("");
+    const [open, setOpen] = useState(false);
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
 
     const handleChangeDate = (e) => {
-        // setTime(e._d.valueOf());
-        // console.log();
+        setTime(e._d.valueOf());
     };
 
     const handleChangeImportant = (e) => {
-        // setImportant(e.target.value);
+        setImportant(e.target.value);
     };
 
     const handleChangeUrgent = (e) => {
-        // setUrgent(e.target.value);
+        setUrgent(e.target.value);
     };
 
     const handleChangeActivities = (e) => {
-        // setActivities(e.target.value);
+        setActivities(e.target.value);
     };
 
-    const handleAddButton = () => {
-        // if (
-        //     activities !== "" &&
-        //     moment.duration(time - new Date().getTime()).asHours() > 0
-        // ) {
-        //     navigate("/");
-        // } else {
-        //     handleOpen();
-        // }
+    const handleUpdateButton = () => {
+        if (
+            activities !== "" &&
+            moment.duration(time - new Date().getTime()).asHours() > 0
+        ) {
+            updateToDoList();
+            navigate("/");
+        } else {
+            handleOpen();
+        }
+    };
+
+    const updateToDoList = async () => {
+        const path = doc(db, "to do list", params.id);
+        await updateDoc(path, {
+            activities: activities,
+            time: time,
+            urgent: urgent,
+            important: important,
+        });
+    };
+
+    const handleCancelButton = () => {
+        navigate("/");
     };
 
     const style = {
@@ -79,13 +96,15 @@ export default function Update() {
             const data = await getDocs(collectionToDoListRef);
             for (let i = 0; i < data.docs.length; i++) {
                 if (data.docs[i].id === params.id) {
-                    return setData(data.docs[i].data());
+                    setActivities(data.docs[i].data().activities);
+                    setTime(data.docs[i].data().time);
+                    setUrgent(data.docs[i].data().urgent);
+                    setImportant(data.docs[i].data().important);
                 }
             }
         };
         getToDoList();
-        console.log(data.urgent);
-    }, []);
+    }, [params.id]);
 
     return (
         <Container
@@ -125,7 +144,7 @@ export default function Update() {
                             width: "100%",
                         }}
                     >
-                        Add To Do List
+                        Update To Do List
                     </Typography>
                     <Box
                         sx={{
@@ -141,12 +160,12 @@ export default function Update() {
                             label="Your Activities"
                             variant="outlined"
                             onChange={handleChangeActivities}
-                            value={data.activities}
+                            value={activities}
                         />
                         <LocalizationProvider dateAdapter={DateAdapter}>
                             <DateTimePicker
                                 label="Pick the time & date"
-                                value={data.time}
+                                value={time}
                                 onChange={(e) => handleChangeDate(e)}
                                 renderInput={(params) => (
                                     <TextField {...params} />
@@ -173,7 +192,7 @@ export default function Update() {
                                 <Select
                                     labelId="demo-simple-select-label"
                                     id="demo-simple-select"
-                                    value={data.important}
+                                    value={important}
                                     label="is it Important?"
                                     onChange={handleChangeImportant}
                                 >
@@ -194,7 +213,7 @@ export default function Update() {
                                 <Select
                                     labelId="demo-simple-select-label"
                                     id="demo-simple-select"
-                                    value={data?.urgent}
+                                    value={urgent}
                                     label="is it Urgent?"
                                     onChange={handleChangeUrgent}
                                 >
@@ -206,13 +225,23 @@ export default function Update() {
                             </FormControl>
                         </Box>
                     </Box>
-                    <Button
-                        onClick={handleAddButton}
-                        sx={{ mt: 3 }}
-                        variant="outlined"
-                    >
-                        Add
-                    </Button>
+                    <Box sx={{ display: "flex", gap: 3 }}>
+                        <Button
+                            onClick={handleCancelButton}
+                            sx={{ mt: 3 }}
+                            variant="outlined"
+                            color="alert"
+                        >
+                            Cancel
+                        </Button>
+                        <Button
+                            onClick={handleUpdateButton}
+                            sx={{ mt: 3 }}
+                            variant="outlined"
+                        >
+                            Update
+                        </Button>
+                    </Box>
                 </Box>
             ) : (
                 <h1>You Have To login first</h1>

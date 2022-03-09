@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Container, Typography } from "@mui/material";
 import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
@@ -18,13 +18,13 @@ import Modal from "@mui/material/Modal";
 import moment from "moment";
 
 function Create() {
-    const [time, setTime] = React.useState(new Date().getTime());
-    const [activities, setActivities] = React.useState("");
-    const [important, setImportant] = React.useState("important");
-    const [urgent, setUrgent] = React.useState("urgent");
-    const [open, setOpen] = React.useState(false);
-    const [done] = React.useState(false);
-    const [late] = React.useState(false);
+    const [time, setTime] = useState(new Date().getTime());
+    const [activities, setActivities] = useState("");
+    const [important, setImportant] = useState("important");
+    const [urgent, setUrgent] = useState("urgent");
+    const [open, setOpen] = useState(false);
+    const [done] = useState(false);
+    const [late] = useState(false);
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
 
@@ -50,7 +50,6 @@ function Create() {
 
     const handleChangeDate = (e) => {
         setTime(e._d.valueOf());
-        console.log();
     };
 
     const handleChangeImportant = (e) => {

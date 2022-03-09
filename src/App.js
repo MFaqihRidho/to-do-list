@@ -28,6 +28,9 @@ function App() {
                     main: "#14213D",
                 }),
             },
+            alert: {
+                main: "#9d0208",
+            },
             background: {
                 ...(mode === "light"
                     ? {
